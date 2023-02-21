@@ -19,23 +19,37 @@
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(USERS)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">60</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(RAMP)}</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Profile" enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+&quot;Email&quot;:&quot;sdstgtest10022023@yopmail.com&quot;,&#xd;
+&quot;Password&quot;:&quot;Test@123&quot;,&#xd;
+&quot;DeviceId&quot;:&quot;25e47e5c-9c2c-4892-ac9c-237ff35dfbed&quot;,&#xd;
+&quot;DeviceTypeId&quot;:&quot;iOS_iPhone&quot;,&#xd;
+&quot;Language&quot;:&quot;en-US&quot;,&#xd;
+&quot;MobileDeviceId&quot;:&quot;&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">dev3-api.umadev3.hhaexchange.com</stringProp>
+          <stringProp name="HTTPSampler.domain">stage-api.umastage.hhaexchange.com</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">private/v1/user/profile</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <stringProp name="HTTPSampler.path">public/v1/user/login</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -48,15 +62,39 @@
           <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJ1c2VySWQiOiJzZHN0Z3Rlc3QxMDAyMjAyM0B5b3BtYWlsLmNvbSIsInVzZXJOYW1lIjoic2RzdGd0ZXN0MTAwMjIwMjNAeW9wbWFpbC5jb20iLCJJZCI6IjE4OSIsImRldmljZUlkIjoiMjVlNDdlNWMtOWMyYy00ODkyLWFjOWMtMjM3ZmYzNWRmYmVkIiwic2Vzc2lvbklkIjoiODAyOWU5YTItN2Q5Mi00OTliLWE0MmItOWMyNjBmMTZlYjcyIiwiUHJvdmlkZXJDYXJlZ2l2ZXJNYXBwaW5nIjoiW3tcIlByb3ZpZGVyXCI6e1wiSWRcIjpcIjljYzVkYjk0LTg0ZWEtNDJkZS05MGE2LTcwNTUyNWFiOGNlZFwiLFwiT2ZmaWNlc1wiOlt7XCJJZFwiOlwiOGI3YTU1ZWMtZjNhYy00NWUxLTg5MDAtNDcwYzUyZjY5Mzc0XCIsXCJjSURzXCI6W1wiUDpmZGQ0NzAzNy1iOTdhLTQ3M2YtOTAwYi1hNWRkMWEyNmI0MzZcIl19XX19XSIsIm5iZiI6MTY3NjI2OTYzNywiZXhwIjoxNjc2NDQyNDM3LCJpYXQiOjE2NzYyNjk2MzcsImlzcyI6ImhoYWV4Y2hhbmdlIn0.5YGvpOn-Oc6dyIoOgsbA9pAktVos6yjPUgS5AMDl6LA</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
                 <stringProp name="Header.value">application/json</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="token" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">token</stringProp>
+            <stringProp name="RegexExtractor.regex">{&quot;UMAToken&quot;:&quot;(.+?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+            <stringProp name="Sample.scope">all</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="GlobalProviderID" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">providerID</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;GlobalProviderId&quot;:&quot;(.+?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="GlobalOfficeID" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">OfficeId</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;GlobalOfficeId&quot;:&quot;(.+?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+          </RegexExtractor>
           <hashTree/>
         </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -94,38 +132,6 @@
             </value>
           </objProp>
           <stringProp name="filename"></stringProp>
-        </ResultCollector>
-        <hashTree/>
-        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>false</time>
-              <latency>false</latency>
-              <timestamp>false</timestamp>
-              <success>false</success>
-              <label>false</label>
-              <code>false</code>
-              <message>false</message>
-              <threadName>false</threadName>
-              <dataType>false</dataType>
-              <encoding>false</encoding>
-              <assertions>false</assertions>
-              <subresults>false</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>true</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-          <boolProp name="ResultCollector.success_only_logging">true</boolProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
